@@ -1,0 +1,38 @@
+/* 
+protoc --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+--go_out=. --go_opt=paths=source_relative *.proto
+*/
+syntax = "proto3";
+
+package todo;
+
+option go_package = "github.com/Mkukarev/go-grpc/proto";
+
+message Todo {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+message GetAllTodosResponse {
+  repeated Todo todos = 1;
+}
+
+message CreateTodoMessage {
+  string title = 1;
+  string content = 2;
+}
+
+message Id {
+  string id = 1;
+}
+
+message Empty {}
+
+service TodoCRUD {
+  rpc CreateTodo (CreateTodoMessage) returns (Todo) {}
+  rpc GetTodo (Id) returns (Todo) {}
+  rpc GetAllTodos (Empty) returns (GetAllTodosResponse) {}
+  rpc UpdateTodo (Todo) returns (Todo) {}
+  rpc DeleteTodo (Id) returns (Empty) {}
+}
