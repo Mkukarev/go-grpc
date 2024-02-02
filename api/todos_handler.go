@@ -60,7 +60,7 @@ func (s *Server) GetTodo(ctx context.Context, param *pb.Id) (*pb.Todo, error) {
 }
 
 func (s *Server) CreateTodo(ctx context.Context, t *pb.CreateTodoMessage) (*pb.Todo, error) {
-	id, _ := uuid.NewUUID()
+	id, _ := uuid.NewRandom()
 
 	// TODO: разобраться с ошибками между сервисами
 	if t.Title == "" {

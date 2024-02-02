@@ -28,7 +28,9 @@ func NewServer(cfg config.HTTPServer, store store.Interface) *Server {
 }
 
 func (server *Server) Start(ctx context.Context) {
-	listen, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", server.cfg.Port))
+	// listen, err := net.Listen("tcp", fmt.Sprintf(":%d", server.cfg.Port))
+	fmt.Println(server.cfg)
+	listen, err := net.Listen("tcp", ":3002")
 	if err != nil {
 		fmt.Printf("Could not listen on port: %v", err)
 	}
@@ -36,9 +38,11 @@ func (server *Server) Start(ctx context.Context) {
 	// gRPC server
 	s := grpc.NewServer()
 	pb.RegisterTodoCRUDServer(s, server)
+
+	fmt.Printf("Hosting server on: %s", listen.Addr().String())
+
 	if err := s.Serve(listen); err != nil {
 		fmt.Printf("Failed to serve: %v", err)
 	}
 
-	fmt.Printf("Hosting server on: %s", listen.Addr().String())
 }
