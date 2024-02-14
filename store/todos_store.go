@@ -39,6 +39,26 @@ func (store *todoStore) close(ctx context.Context) {
 	store.db.Close(ctx)
 }
 
+func (store *todoStore) CheckTodoTable(ctx context.Context) {
+	store.connect(ctx)
+	defer store.close(ctx)
+
+	query := `CREATE TABLE IF NOT EXISTS todos (
+		Id CHARACTER VARYING(100) PRIMARY KEY,
+    Title CHARACTER VARYING(100),
+    Content CHARACTER VARYING(100)
+		)`
+
+	_, err := store.db.Exec(context.Background(), query)
+	if err != nil {
+		fmt.Println("Unable to create table:", err)
+		return
+	}
+
+	fmt.Println("Table created successfully!")
+
+}
+
 func (store *todoStore) CreateTodo(ctx context.Context, todo Todo) {
 	store.connect(ctx)
 	defer store.close(ctx)

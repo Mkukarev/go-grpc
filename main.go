@@ -19,6 +19,8 @@ func main() {
 
 	store := store.NewTodoStore(cfg.DatabaseURL)
 
+	store.CheckTodoTable(ctx)
+
 	server := api.NewServer(cfg.HTTPServer, store)
 	server.Start(ctx)
 }

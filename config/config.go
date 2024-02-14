@@ -52,7 +52,8 @@ func Load() (Configuration, error) {
 
 	server := HTTPServer{
 		IdleTimeout:  duration(os.Getenv("HTTP_SERVER_IDLE_TIMEOUT")),
-		Port:         toInt(os.Getenv("HTTP_SERVER_PORT")),
+		// Port:         toInt(os.Getenv("HTTP_SERVER_PORT")),
+		Port:         3002,
 		ReadTimeout:  duration(os.Getenv("HTTP_SERVER_READ_TIMEOUT")),
 		WriteTimeout: duration(os.Getenv("HTTP_SERVER_WRITE_TIMEOUT")),
 	}
